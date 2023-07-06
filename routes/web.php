@@ -20,9 +20,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', [ForumController::class, 'index']);
-Route::get('/1/view', [ForumController::class, 'view']);
+Route::get('/{id}/view', [ForumController::class, 'view']);
+Route::get('/{id}/edit', [ForumController::class, 'edit']);
 Route::get('/create', [ForumController::class, 'create']);
 Route::post('/store', [ForumController::class, 'store']);
+Route::post('/update', [ForumController::class, 'update']);
+Route::get('/{id}/category', [ForumController::class, 'category']);
+Route::delete('/{id}/delete', [ForumController::class, 'delete']);
+Route::post('/reply/store', [ForumController::class, 'replyStore']);
 
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/{id}/view', [CategoryController::class, 'view']);

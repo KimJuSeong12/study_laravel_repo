@@ -8,15 +8,33 @@
          </button>
          <div class="collapse navbar-collapse" id="navbarNav">
              <ul class="navbar-nav">
-                 <li class="nav-item">
-                     <a class="nav-link active" aria-current="page" href="{{ url('/category') }}">Category</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link" href="{{ url('/') }}">Login</a>
-                 </li>
-                 <li class="nav-item">
-                     <a class="nav-link" href="{{ url('/') }}">register</a>
-                 </li>
+                 @auth
+
+                     <li class="nav-item">
+                         <a class="nav-link active" aria-current="page" href="{{ url('/category') }}">Category</a>
+                     </li>
+                 @endauth
+                 @guest
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ url('/') }}/login">Login</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link" href="{{ url('/') }}/register">register</a>
+                     </li>
+                 @endguest
+
+                 @auth
+                     <!-- Authentication -->
+                     <li class="nav-item">
+                         <form method="POST" action="{{ route('logout') }}">
+                             @csrf
+                             <a class="nav-link" href="route('logout')"
+                                 onclick="event.preventDefault(); this.closest('form').submit();">
+                                 Log Out(환영합니다. {{ auth()->user()->name }} 님)
+                             </a>
+                         </form>
+                     </li>
+                 @endauth
              </ul>
          </div>
      </div>
