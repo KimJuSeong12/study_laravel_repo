@@ -9,7 +9,6 @@
          <div class="collapse navbar-collapse" id="navbarNav">
              <ul class="navbar-nav">
                  @auth
-
                      <li class="nav-item">
                          <a class="nav-link active" aria-current="page" href="{{ url('/category') }}">Category</a>
                      </li>

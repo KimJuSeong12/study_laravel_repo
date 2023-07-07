@@ -28,6 +28,8 @@ Route::post('/update', [ForumController::class, 'update']);
 Route::get('/{id}/category', [ForumController::class, 'category']);
 Route::delete('/{id}/delete', [ForumController::class, 'delete']);
 Route::post('/reply/store', [ForumController::class, 'replyStore']);
+Route::post('/{id}/like', [ForumController::class, 'like']);
+Route::post('/{id}/unlike', [ForumController::class, 'unlike']);
 
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/{id}/view', [CategoryController::class, 'view']);

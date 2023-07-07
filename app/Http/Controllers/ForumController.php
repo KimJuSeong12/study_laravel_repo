@@ -89,4 +89,23 @@ class ForumController extends Controller
         $reply->save();
         return redirect('/' . $request->post_id . '/view');
     }
+    // 좋아요 저장
+    public function like($id)
+    {
+        $post = Post::find($id);
+        $post->like = $post->like + 1;
+        $post->save();
+
+        return response()->json(['result' => 'success']);
+    }
+
+    // 좋아요 삭제
+    public function unlike($id)
+    {
+        $post = Post::find($id);
+        $post->like = $post->like - 1;
+        $post->save();
+
+        return response()->json(['result' => 'success']);
+    }
 }

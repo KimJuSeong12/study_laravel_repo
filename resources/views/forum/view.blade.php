@@ -22,7 +22,8 @@
             @endauth
         </div>
         <div class="d-flex justify-content-center mt-5">
-            <button type="button" class="btn btn-outline-danger w-25 btn-lg"><i class="fas fa-heart"></i>4</button>
+            <button type="button" class="btn btn-outline-danger w-25 btn-lg"><i class="fas fa-heart"></i>
+                {{ $post->like }}</button>
         </div>
 
         {{-- 답글 --}}
@@ -68,4 +69,51 @@
             </div>
         </form>
     </div>
+    <script>
+        let liked = false; // 사용자가 해당 게시글을 좋아요한지 아닌지를 추적하는 변수 초기값은 false로 설정
+        const likeButton = document.querySelector('.btn-outline-danger'); // 좋아요 버튼의 DOM 요소를 참조하는 변수
+        let likeCount = {{ $post->like }}; // 서버에서 받아온 게시글의 좋아요 수
+
+        // 좋아요 버튼의 텍스트를 업데이트하는 함수
+        function updateLikeButtonText() {
+            likeButton.innerHTML = `<i class="fas fa-heart"></i> ${likeCount}`;
+        }
+
+        // 좋아요 버튼에 클릭 이벤트 리스너를 설정
+        likeButton.addEventListener('click', () => {
+            if (!liked) { // 현재 좋아요 상태가 아닌 경우
+                // 좋아요 추가 시
+                fetch('/{{ $post->id }}/like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                }).then((response) => {
+                    // 요청이 성공한 경우
+                    if (response.ok) {
+                        likeCount++; // 좋아요 수를 증가
+                        updateLikeButtonText(); // 증가된 좋아요 수를 버튼에 업데이트
+                        liked = true; // 상태를 좋아요 상태로 변경
+                    }
+                });
+            } else { // 현재 좋아요 상태인 경우
+                // 좋아요 삭제 시
+                fetch('/{{ $post->id }}/unlike', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                }).then((response) => {
+                    // 요청이 성공한 경우
+                    if (response.ok) {
+                        likeCount--; // 좋아요 수를 감소
+                        updateLikeButtonText(); // 감소된 좋아요 수를 버튼에 업데이트
+                        liked = false; // 상태를 좋아요가 아닌 상태로 변경
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

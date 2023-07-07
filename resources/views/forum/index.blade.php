@@ -30,7 +30,8 @@
                                     <li class="list-group-item">
                                         <a href="{{ url('/') }}/{{ $post->id }}/view">{{ $post->title }}</a>
                                         <span class="badge text-bg-info"> <i class="fas fa-comment-dots"></i>3</span>
-                                        <span class="badge rounded-pill text-bg-danger"><i class="fas fa-heart"></i>4</span>
+                                        <span class="badge rounded-pill text-bg-danger"><i class="fas fa-heart"></i>
+                                            {{ $post->like }}</span>
                                         <br>
                                         <small>{{ $post->create_at }}| by 홍길동</small>
                                     </li>
